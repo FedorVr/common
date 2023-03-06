@@ -7,10 +7,12 @@ namespace Microservices;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 
 class UserService
 {
-    private $endpoint;
+    private string $endpoint;
 
     public function __construct()
     {
@@ -32,7 +34,7 @@ class UserService
      */
     public function request(): PendingRequest
     {
-        return \Http::withHeaders($this->headers());
+        return Http::withHeaders($this->headers());
     }
 
     /**
@@ -67,16 +69,16 @@ class UserService
      * @return Response
      * @throws AuthorizationException
      */
-    public function allows($ability, $arguments)
+    public function allows($ability, $arguments): Response
     {
-        return \Gate::forUser($this->getUser())->authorize($ability, $arguments);
+        return Gate::forUser($this->getUser())->authorize($ability, $arguments);
     }
 
     /**
      * @param $page
-     * @return array|mixed
+     * @return array
      */
-    public function all($page)
+    public function all($page): array
     {
         return $this->request()->get("{$this->endpoint}/users?page={$page}")->json();
     }
