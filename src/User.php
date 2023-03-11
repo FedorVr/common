@@ -10,7 +10,7 @@ class User
     public string $first_name;
     public string $last_name;
     public string $email;
-    public bool $is_influencer;
+    public int $is_influencer;
 
     public function __construct($json)
     {
