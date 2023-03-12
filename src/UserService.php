@@ -78,7 +78,7 @@ class UserService
      * @param $page
      * @return array
      */
-    public function all($page): array
+    public function paginate($page): array
     {
         return $this->request()->get("{$this->endpoint}/users?page={$page}")->json();
     }
@@ -87,7 +87,7 @@ class UserService
      * @param $id
      * @return User
      */
-    public function get($id): User
+    public function find($id): User
     {
         $json = $this->request()->get("{$this->endpoint}/users/{$id}")->json();
 
