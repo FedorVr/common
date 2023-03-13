@@ -7,6 +7,7 @@ namespace Microservices;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 
@@ -25,7 +26,7 @@ class UserService
     public function headers(): array
     {
         return [
-            'Authorization' => request()->headers->get('Authorization')
+            'Authorization' => request()->headers->get('Authorization') ?? Cache::get('Authorization')
         ];
     }
 
